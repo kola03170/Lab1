@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -59,52 +60,68 @@ int main(void)
     // ============ ЗАДАНИЕ 4 ============
     printf("\n\n========== ЗАДАНИЕ 4 ==========\n");
 
-    int b[3][4];
-    int j;
-    int sum;
+	int** matrix;
+	int size;
+    int sumDiag = 0;
+	int row, col;
 
-    printf("Введите элементы массива 3x4:\n");
+    printf("Введите размерность квадратной матрицы:\n");
+	scanf_s("%d", &size);
 
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 4; j++)
-        {
-            printf("a[%d][%d] = ", i, j);
-            scanf_s("%d", &b[i][j]);
-        }
-    }
+	matrix = (int**)malloc(size * sizeof(int*));
+	if (matrix == NULL)
+	{
+		printf("Ошибка выделения памяти!\n");
+		return 1;
+	}
 
-    printf("\nИсходный массив:\n");
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 4; j++)
-        {
-            printf("%d\t", b[i][j]);
-        }
-        printf("\n");
-    }
+	for (row=0; row < size; row++)
+	{
+		matrix[row] = (int*)malloc(size * sizeof(int));
+		if (matrix[row] == NULL)
+		{
+			printf("Ошибка выделения памяти!\n");
+			for (int k = 0; k < i; k++)
+				free(matrix[k]);
+			free(matrix);
+			return 1;
+		}
+	}
 
-    printf("\nСумма каждого столбца:\n");
-    for (j = 0; j < 4; j++)
-    {
-        sum = 0;
-        for (i = 0; i < 3; i++)
-        {
-            sum = sum + b[i][j];
-        }
-        printf("Столбец %d: %d\n", j, sum);
-    }
+	srand((unsigned)time(NULL));
 
-    printf("\nСумма каждой строки:\n");
-    for (i = 0; i < 3; i++)
-    {
-        sum = 0;
-        for (j = 0; j < 4; j++)
-        {
-            sum = sum + b[i][j];
-        }
-        printf("Строка %d: %d\n", i, sum);
-    }
+	printf("\nСгенерированная матрица %dx%d:\n", size, size);
+	for (i = 0; i < size; i++)
+	{
+		for(j=0; j < size; j++)
+		{
+			matrix[i][j] = rand() % 31 - 10;
+			printf("%4d ", matrix[i][j]);
+		}
+		printf("\n");
+	}
+
+	sum = 0;
+	for (i=0; i < size; i++)
+	{
+		sum += matrix[i][j];
+
+		for (j = i + 1; j < size; j++)
+		{
+			sum += matrix[i][j];
+		}
+	}
+
+	printf("\nСумма элементов главной диагонали и выше: %d\n", sum);
+
+	for (i = 0, j < size; i++)
+	{
+		free(matrix[i]);
+	}
+	free(matrix);
+
+	printf("\n");
+
 
     // ============ ЗАДАНИЕ 5 ============
     printf("\n\n========== ЗАДАНИЕ 5 ==========\n");
@@ -166,3 +183,5 @@ int main(void)
 
     return 0;
 }
+# дополнить 4 задание, спрашиваем размерность квадратной матрицы, динамически выделяем память. Заполняем матрицу элементами в диапазоне -10 до 20. Найти сумму элементов располагающихся на и выше главной диагонали.
+# дополнить 5 задание, спрашиваем колво записей, динамически выделяем память и осуществляем поиск по неполному совпадению заданной строки по всем параметрам
