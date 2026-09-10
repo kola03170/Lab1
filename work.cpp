@@ -125,63 +125,83 @@ int main(void)
 
     // ============ ЗАДАНИЕ 5 ============
     printf("\n\n========== ЗАДАНИЕ 5 ==========\n");
+struct student
+{
+    char famil[20];
+    char name[20];
+    char facult[20];
+    int Nomzach;
+};
 
-    struct student
-    {
-        char famil[20];
-        char name[20];
-        char facult[20];
-        int Nomzach;
-    } stud[3];
+int n;
+int found = 0;
+char search[20];
 
-    char search[20];
-    int found = 0;
+printf("Введите количество студентов: ");
+scanf_s("%d", &n);
 
-    printf("Введите данные о 3 студентах:\n\n");
+struct student* stud;
 
-    for (i = 0; i < 3; i++)
-    {
-        printf("Студент %d:\n", i + 1);
+stud = (struct student*)malloc(n * sizeof(struct student));
 
-        printf("  Фамилия: ");
-        scanf_s("%19s", stud[i].famil, 20);
-
-        printf("  Имя: ");
-        scanf_s("%19s", stud[i].name, 20);
-
-        printf("  Факультет: ");
-        scanf_s("%19s", stud[i].facult, 20);
-
-        printf("  Номер зачётной книжки: ");
-        scanf_s("%d", &stud[i].Nomzach);
-
-        printf("\n");
-    }
-
-    printf("Введите фамилию для поиска: ");
-    scanf_s("%19s", search, 20);
-
-    for (i = 0; i < 3; i++)
-    {
-        if (strcmp(stud[i].famil, search) == 0)
-        {
-            printf("\nСтудент найден:\n");
-            printf("  Фамилия: %s\n", stud[i].famil);
-            printf("  Имя: %s\n", stud[i].name);
-            printf("  Факультет: %s\n", stud[i].facult);
-            printf("  Номер зачётной книжки: %d\n", stud[i].Nomzach);
-            found = 1;
-        }
-    }
-
-    if (found == 0)
-    {
-        printf("\nСтудент с фамилией '%s' не найден.\n", search);
-    }
-
-    printf("\n\nПрограмма завершена.\n");
-
-    return 0;
+if (stud == NULL)
+{
+    printf("Ошибка выделения памяти!\n");
+    return 1;
 }
+
+printf("\nВведите данные о студентах:\n\n");
+
+for (i = 0; i < n; i++)
+{
+    printf("Студент %d:\n", i + 1);
+
+    printf("  Фамилия: ");
+    scanf_s("%19s", stud[i].famil, 20);
+
+    printf("  Имя: ");
+    scanf_s("%19s", stud[i].name, 20);
+
+    printf("  Факультет: ");
+    scanf_s("%19s", stud[i].facult, 20);
+
+    printf("  Номер зачётной книжки: ");
+    scanf_s("%d", &stud[i].Nomzach);
+
+    printf("\n");
+}
+
+printf("Введите строку для поиска: ");
+scanf_s("%19s", search, 20);
+
+for (i = 0; i < n; i++)
+{
+    char nomzach[20];
+
+    sprintf_s(nomzach, sizeof(nomzach), "%d", stud[i].Nomzach);
+
+    if (strstr(stud[i].famil, search) != NULL ||
+        strstr(stud[i].name, search) != NULL ||
+        strstr(stud[i].facult, search) != NULL ||
+        strstr(nomzach, search) != NULL)
+    {
+        printf("\nСтудент найден:\n");
+        printf("  Фамилия: %s\n", stud[i].famil);
+        printf("  Имя: %s\n", stud[i].name);
+        printf("  Факультет: %s\n", stud[i].facult);
+        printf("  Номер зачётной книжки: %d\n", stud[i].Nomzach);
+
+        found = 1;
+    }
+}
+
+if (found == 0)
+{
+    printf("\nСовпадений не найдено.\n");
+}
+
+free(stud);
+
+printf("\nПамять освобождена.\n");
 # дополнить 4 задание, спрашиваем размерность квадратной матрицы, динамически выделяем память. Заполняем матрицу элементами в диапазоне -10 до 20. Найти сумму элементов располагающихся на и выше главной диагонали.
 # дополнить 5 задание, спрашиваем колво записей, динамически выделяем память и осуществляем поиск по неполному совпадению заданной строки по всем параметрам
