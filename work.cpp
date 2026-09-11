@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS // Required for scanf in Visual Studio
+#define _CRT_SECURE_NO_WARNINGS 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -63,7 +63,7 @@ int main(void)
     int** matrix;
     int size;
     int sum = 0;
-    int row, col, j; // Added j and col here
+    int row, col, j; 
 
     printf("Введите размерность квадратной матрицы: ");
     scanf("%d", &size);
@@ -95,17 +95,16 @@ int main(void)
     {
         for (j = 0; j < size; j++)
         {
-            matrix[i][j] = rand() % 31 - 10; // Range -10 to 20
+            matrix[i][j] = rand() % 31 - 10; 
             printf("%4d ", matrix[i][j]);
         }
         printf("\n");
     }
 
-    // Calculate sum of elements on and above the main diagonal
     sum = 0;
     for (i = 0; i < size; i++)
     {
-        for (j = i; j < size; j++) // j starts from i (main diagonal) to end of row
+        for (j = i; j < size; j++) 
         {
             sum += matrix[i][j];
         }
@@ -113,7 +112,6 @@ int main(void)
 
     printf("\nСумма элементов главной диагонали и выше: %d\n", sum);
 
-    // Free matrix memory correctly
     for (i = 0; i < size; i++)
     {
         free(matrix[i]);
@@ -132,7 +130,7 @@ int main(void)
         int Nomzach;
     };
 
-    int count; // Renamed to avoid conflict with previous 'n'
+    int count; 
     int found = 0;
     char search[20];
 
@@ -156,7 +154,7 @@ int main(void)
         printf("Студент %d:\n", i + 1);
 
         printf("  Фамилия: ");
-        scanf("%19s", stud[i].famil); // scanf_s not strictly needed here if _CRT_SECURE_NO_WARNINGS is defined
+        scanf("%19s", stud[i].famil); 
 
         printf("  Имя: ");
         scanf("%19s", stud[i].name);
